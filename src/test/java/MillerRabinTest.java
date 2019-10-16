@@ -37,13 +37,4 @@ public class MillerRabinTest {
         millerRabin.isPrimeNumber("Hello");
     }
 
-    @Test
-    public void modPow() {
-        assertEquals(4, millerRabin.modPow(6,2,8));
-    }
-
-    @Test
-    public void mulMod() {
-        assertEquals(4, millerRabin.mulMod(5,3,11));
-    }
 }
