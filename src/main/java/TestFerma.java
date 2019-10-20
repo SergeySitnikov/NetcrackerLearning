@@ -1,16 +1,25 @@
-public class TestFerma implements SearchPrimeNumbers {
-    public boolean isPrimeNumber(String number) throws NumberFormatException {
-        long n = Long.parseLong(number);
-        if (n == 2) {
+public class TestFerma extends Thread implements SearchPrimeNumbers {
+    private long number;
+
+    public TestFerma(long number) {
+        this.number = number;
+    }
+
+
+    public TestFerma() {
+    }
+
+    public boolean isPrimeNumber() {
+        if (number == 2) {
             return true;
         }
-        if (Main.initialCheck(n)) {
+        if (Main.initialCheck(number)) {
             for (int i = 0; i < 100; i++) {
-                long tmp = (long)(Math.random()*(n-1) + 1);
-                if (this.greatestCommonDivider(tmp, n) != 1) {
+                long tmp = (long) (Math.random() * (number - 1) + 1);
+                if (this.greatestCommonDivider(tmp, number) != 1) {
                     return false;
                 }
-                if (this.pows(tmp, n - 1, n) != 1) {
+                if (this.pows(tmp, number - 1, number) != 1) {
                     return false;
                 }
             }
@@ -21,7 +30,7 @@ public class TestFerma implements SearchPrimeNumbers {
 
     }
 
-    protected long greatestCommonDivider(long a, long b) { //Create test
+    public long greatestCommonDivider(long a, long b) { //Create test
         if (b == 0) {
             return a;
         }
@@ -30,19 +39,36 @@ public class TestFerma implements SearchPrimeNumbers {
 
     public long pows(long a, long b, long m) {
         if (b == 0) return 1;
-        if (b % 2 == 0) {
-            long t = pows(a, b / 2, m);
-            return this.mul(t, t, m); //%m
+        try {
+            if (b % 2 == 0) {
+                long t = pows(a, b / 2, m);
+                return this.mul(t, t, m); //%m
+            }
+            return (this.mul(pows(a, b - 1, m), a, m)); //%m
+        } catch (StackOverflowError ex) {
+            System.out.println("StackOverFlow");
+            System.exit(-1);
+            return 0;
         }
-        return (this.mul(pows(a, b - 1, m), a, m)); //%m
     }
 
-    public long mul(long a, long b, long m) {
+    public long mul(long a, long b, long m) throws StackOverflowError {
         if (b == 1) return a;
         if (b % 2 == 0) {
             long t = mul(a, b / 2, m);
             return (2 * t) % m;
         }
         return (mul(a, b - 1, m) + a) % m;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("ferma");
+        Main.isPrime[1] = this.isPrimeNumber();
+    }
+
+    public boolean isPrimeNumber(long n) {
+        this.number = n;
+        return this.isPrimeNumber();
     }
 }

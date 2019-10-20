@@ -9,32 +9,24 @@ public class MillerRabinTest {
 
     @Test
     public void isPrimeNumber() {
-        assertEquals(true, millerRabin.isPrimeNumber("31"));
+        assertEquals(true, millerRabin.isPrimeNumber(31));
     }
 
     @Test
     public void isCompositeNumber() throws Exception {
-        assertEquals(false, millerRabin.isPrimeNumber("121"));
+        assertEquals(false, millerRabin.isPrimeNumber(121));
     }
 
     @Test
     public void isEvenNumber() throws Exception {
-        assertEquals(false, millerRabin.isPrimeNumber("8"));
+        assertEquals(false, millerRabin.isPrimeNumber(8));
     }
 
     @Test
     public void isNegativeNumber() throws Exception {
-        assertEquals(false, millerRabin.isPrimeNumber("-4"));
+        assertEquals(false, millerRabin.isPrimeNumber(-4));
     }
 
-    @Test(expected = Exception.class)
-    public void isOverflowParameter() throws Exception {
-        millerRabin.isPrimeNumber("9,223,372,036,854,775,809");
-    }
 
-    @Test(expected = NumberFormatException.class)
-    public void isStringParameter() throws NumberFormatException {
-        millerRabin.isPrimeNumber("Hello");
-    }
 
 }

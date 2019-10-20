@@ -1,9 +1,14 @@
-public class SearchPrimeNumberByEnumeration implements SearchPrimeNumbers {
-    public SearchPrimeNumberByEnumeration() {
+public class SearchPrimeNumberByEnumeration implements SearchPrimeNumbers  {
+
+    private long number;
+
+    public SearchPrimeNumberByEnumeration(long number) {
+        this.number = number;
     }
 
-    public boolean isPrimeNumber(String numberInStringFormat) throws NumberFormatException {
-        long number = Long.parseLong(numberInStringFormat);
+    public SearchPrimeNumberByEnumeration() {}
+
+    public boolean isPrimeNumber() {
         if (number == 2)
             return true;
         if(Main.initialCheck(number)) {
@@ -17,5 +22,10 @@ public class SearchPrimeNumberByEnumeration implements SearchPrimeNumbers {
         }
             return true;
 
+    }
+
+    public boolean isPrimeNumber(long n) {
+        this.number = n;
+        return this.isPrimeNumber();
     }
 }

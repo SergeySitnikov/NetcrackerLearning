@@ -8,32 +8,28 @@ public class TestFermaTest {
 
     @Test
     public void isPrimeNumber() {
-        assertEquals(true, test.isPrimeNumber("31"));
+        assertEquals(true, test.isPrimeNumber(31));
     }
 
     @Test
     public void isCompositeNumber() throws Exception {
-        assertEquals(false, test.isPrimeNumber("121"));
+        assertEquals(false, test.isPrimeNumber(121));
     }
 
     @Test
     public void isEvenNumber() throws Exception {
-        assertEquals(false, test.isPrimeNumber("8"));
+        assertEquals(false, test.isPrimeNumber(8));
     }
 
     @Test
     public void isNegativeNumber() throws Exception {
-        assertEquals(false, test.isPrimeNumber("-4"));
+        assertEquals(false, test.isPrimeNumber(-4));
     }
 
-    @Test(expected = Exception.class)
-    public void isOverflowParameter() throws Exception {
-        test.isPrimeNumber("9,223,372,036,854,775,809");
-    }
 
-    @Test(expected = NumberFormatException.class)
-    public void isStringParameter() throws NumberFormatException {
-        test.isPrimeNumber("Hello");
+    @Test
+    public void dividers() {
+        assertEquals(15, test.greatestCommonDivider(15,30));
     }
 
     @Test
