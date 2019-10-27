@@ -17,6 +17,11 @@ public class TestFermaTest {
     }
 
     @Test
+    public void isTwo() throws Exception {
+        assertEquals(true, test.isPrimeNumber(2));
+    }
+
+    @Test
     public void isEvenNumber() throws Exception {
         assertEquals(false, test.isPrimeNumber(8));
     }
@@ -28,9 +33,10 @@ public class TestFermaTest {
 
 
     @Test
-    public void dividers() {
+    public void dividersTrue() {
         assertEquals(15, test.greatestCommonDivider(15,30));
     }
+
 
     @Test
     public void pows() throws Exception {

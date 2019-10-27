@@ -1,6 +1,4 @@
-public class SolovayStrassen extends Thread implements SearchPrimeNumbers {
-    private long number;
-    private TestFerma testFerma = new TestFerma();
+public class SolovayStrassen extends TestFerma implements SearchPrimeNumbers {
 
     public SolovayStrassen(long number) {
         this.number = number;
@@ -9,19 +7,19 @@ public class SolovayStrassen extends Thread implements SearchPrimeNumbers {
     public SolovayStrassen() {}
 
     public boolean isPrimeNumber() {
-
+        long t1 = System.nanoTime();
         if (number == 2) {
             return true;
         }
-        if (Main.initialCheck(number)) {
+        if (this.initialCheck(number)) {
             for (int i = 0; i < 100; i++) {
                 long tmp = (long) (Math.random() * (number - 2) + 2);
-                if (testFerma.greatestCommonDivider(tmp, number) != 1) return false;
+                if (greatestCommonDivider(tmp, number) != 1) return false;
                 long yacoby = this.algorithmYacoby(tmp, number);
                 if (yacoby == -1) {
                     yacoby = number - 1;
                 }
-                if (testFerma.pows(tmp, (number- 1) / 2, number) != yacoby) {
+                if (pows(tmp, (number- 1) / 2, number) != yacoby) {
                     return false;
                 }
             }
@@ -29,11 +27,12 @@ public class SolovayStrassen extends Thread implements SearchPrimeNumbers {
         } else {
             return false;
         }
+        System.out.println(System.nanoTime() - t1 + " solovay");
         return true;
     }
 
     public int algorithmYacoby(long a, long b) {
-        if (testFerma.greatestCommonDivider(a, b) != 1) return 0;
+        if (greatestCommonDivider(a, b) != 1) return 0;
         int r = 1;
 
         do {
@@ -56,11 +55,6 @@ public class SolovayStrassen extends Thread implements SearchPrimeNumbers {
         return r;
     }
 
-    @Override
-    public void run() {
-        System.out.println("start");
-        Main.isPrime[2] = this.isPrimeNumber();
-    }
 
     public boolean isPrimeNumber(long n) {
         this.number = n;

@@ -1,7 +1,8 @@
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Main { //68763478963789333 is true, 6876347896378933337 is stackOverflowError, 567153675467 is true
-    public static boolean[] isPrime = {false, false, false};
 
     public static void main(String[] args) {
         while (true) {
@@ -10,23 +11,21 @@ public class Main { //68763478963789333 is true, 6876347896378933337 is stackOve
             String number = sc.nextLine();
             try {
                 long n = Long.parseLong(number);
-                MillerRabin test = new MillerRabin(n);
-                TestFerma test2 = new TestFerma(n);
-                SolovayStrassen test3 = new SolovayStrassen(n);
-                test.start();
-                test2.start();
-                test3.start();
-                Thread.sleep(500);
-                boolean flag = true;
-                for (boolean b : isPrime) {
-                    System.out.println(b);
-                    if (b && flag) {
-                        SearchPrimeNumberByEnumeration searcher = new SearchPrimeNumberByEnumeration(n);
-                        System.out.println(searcher.isPrimeNumber() + " EnumerationTest");
-                        flag = false;
-                    }
+                MillerRabin millerRabin = new MillerRabin(n);
+                TestFerma ferma = new TestFerma(n);
+                SolovayStrassen solovayStrassen = new SolovayStrassen(n);
+                Optional<Boolean> any = Arrays.asList(millerRabin, ferma, solovayStrassen).stream().parallel().map(it -> it.isPrimeNumber()).filter(it -> it).findAny();
+                if (any.isPresent()) {
+                    long l1 = System.nanoTime();
+                    SearchPrimeNumberByEnumeration enumeration = new SearchPrimeNumberByEnumeration(n);
+                    System.out.println(enumeration.isPrimeNumber());
+                    System.out.println(System.nanoTime() - l1);
+                } else {
+                    System.out.println(false);
                 }
-            } catch (NumberFormatException | InterruptedException ex) {
+
+
+            } catch (NumberFormatException ex) {
                 System.out.println("Incorrect number");
                 continue;
             }
@@ -34,11 +33,5 @@ public class Main { //68763478963789333 is true, 6876347896378933337 is stackOve
         }
     }
 
-    public static boolean initialCheck(long n) {
-        if (n < 2)
-            return false;
-        if (n % 2 == 0)
-            return false;
-        return true;
-    }
+
 }

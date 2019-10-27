@@ -1,5 +1,4 @@
-public class TestFerma extends Thread implements SearchPrimeNumbers {
-    private long number;
+public class TestFerma extends Methods implements SearchPrimeNumbers {
 
     public TestFerma(long number) {
         this.number = number;
@@ -10,10 +9,11 @@ public class TestFerma extends Thread implements SearchPrimeNumbers {
     }
 
     public boolean isPrimeNumber() {
+        long t1 = System.nanoTime();
         if (number == 2) {
             return true;
         }
-        if (Main.initialCheck(number)) {
+        if (this.initialCheck(number)) {
             for (int i = 0; i < 100; i++) {
                 long tmp = (long) (Math.random() * (number - 1) + 1);
                 if (this.greatestCommonDivider(tmp, number) != 1) {
@@ -26,6 +26,7 @@ public class TestFerma extends Thread implements SearchPrimeNumbers {
         } else {
             return false;
         }
+        System.out.println(System.nanoTime() - t1 + " ferma");
         return true;
 
     }
@@ -61,11 +62,6 @@ public class TestFerma extends Thread implements SearchPrimeNumbers {
         return (mul(a, b - 1, m) + a) % m;
     }
 
-    @Override
-    public void run() {
-        System.out.println("ferma");
-        Main.isPrime[1] = this.isPrimeNumber();
-    }
 
     public boolean isPrimeNumber(long n) {
         this.number = n;

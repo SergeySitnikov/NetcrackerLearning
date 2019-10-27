@@ -11,7 +11,7 @@ public class SearchPrimeNumberByEnumeration implements SearchPrimeNumbers  {
     public boolean isPrimeNumber() {
         if (number == 2)
             return true;
-        if(Main.initialCheck(number)) {
+        if(this.initialCheck(number)) {
             for (int i = 3; i <= Math.sqrt(number); i += 2) {
                 if (number % i == 0) {
                     return false;

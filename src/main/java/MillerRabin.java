@@ -1,8 +1,6 @@
 import java.util.Random;
 
-public class MillerRabin extends Thread implements SearchPrimeNumbers {
-    private TestFerma methods = new TestFerma();
-    private long number;
+public class MillerRabin extends TestFerma implements SearchPrimeNumbers {
 
     public MillerRabin(long number) {
         this.number = number;
@@ -11,10 +9,11 @@ public class MillerRabin extends Thread implements SearchPrimeNumbers {
     public MillerRabin() {}
 
     public boolean isPrimeNumber() {
+        long t1 = System.nanoTime();
         if (number == 2) {
             return true;
         }
-        if (Main.initialCheck(number)) {
+        if (this.initialCheck(number)) {
             long s = number - 1;
             while (s % 2 == 0)
                 s /= 2;
@@ -23,9 +22,9 @@ public class MillerRabin extends Thread implements SearchPrimeNumbers {
             for (int i = 0; i < 50; i++) {
                 long r = Math.abs(rand.nextLong());
                 long a = r % (number - 1) + 1, temp = s;
-                long mod = this.methods.pows(a, temp, number);
+                long mod = pows(a, temp, number);
                 while (temp != number - 1 && mod != 1 && mod != number - 1) {
-                    mod = this.methods.mul(mod, mod, number);
+                    mod = mul(mod, mod, number);
                     temp *= 2;
                 }
                 if (mod != number - 1 && temp % 2 == 0)
@@ -34,14 +33,11 @@ public class MillerRabin extends Thread implements SearchPrimeNumbers {
         } else {
             return false;
         }
+        System.out.println(System.nanoTime() - t1 + " miller");
         return true;
 
     }
 
-    @Override
-    public void run() {
-        Main.isPrime[0] = this.isPrimeNumber();
-    }
 
     public boolean isPrimeNumber(long n) {
         this.number = n;
